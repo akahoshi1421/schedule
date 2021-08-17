@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>予定表</title>
+        <link rel="stylesheet" href="{% static 'css/top.css' %}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <div class="container">
+            <h1 class="display-1 title_h1">予定表</h1>
+            <div class="alert alert-success" role="alert">
+                {% if task %}
+                    <h2>直近のタスクは{{task.year}}/{{task.month}}/{{task.day}}の「{{task.content}}」({{task.time}}時から)です</h2>
+                {% else %}
+                    <h2>登録されているタスクはありません</h2>
+                {% endif %}
+            </div>
+            <div class="row my_grid">
+                {% for month in year %}
+                <div class="col-lg-4 col-12"> 
+                    <h2>{{month.year_number}}年{{month.month_number}}月</h2>
+                    <table class = "table table-bordered">
+                        <tr>
+                            <td>日</td>
+                            <td>月</td>
+                            <td>火</td>
+                            <td>水</td>
+                            <td>木</td>
+                            <td>金</td>
+                            <td>土</td>
+                        </tr>
+
+                        {% for week in month.month %}
+                            <tr>
+                                {% for day in week %}
+                                    <td><a href="/{{month.year_number}}/{{month.month_number}}/{{day}}" style="text-decoration: none;">{{day}}</a></td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+            
+        
+        </div>
+    <div class="aki">
+    </div>
+    </body>
+</html>
