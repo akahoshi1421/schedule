@@ -56,7 +56,7 @@ def top(request):
             except:
                 break
 
-        #print(len(l))
+                #上までが1月分ごとにまとまった曜日のセットが12月分ある
         
         month = []
         week = []
@@ -83,7 +83,9 @@ def top(request):
                     n = 6
                 
                 for _ in range(0, n):
-                    week.insert(0, "")
+                    week.insert(0, {"number":""})
+
+                #ここまでが月の最初が何曜日かを判定し、火曜日なら日月の2日分空白を作る
                 
                 #print(week)
             
@@ -91,11 +93,18 @@ def top(request):
                 month.append(week)
                 week = []
             
-            week.append(i + 1)
+                #一週間を判定
+            
+            task_len = task.objects.filter(conect__iregex=str(year_now) + str(tuki).zfill(2) + str(i + 1).zfill(2))
+            if len(task_len) != 0:
+                week.append({"number": i + 1, "bool": True})
+            
+            else:
+                week.append({"number": i + 1})
 
             if i + 1 == len(l):
                 for ___ in range(0, 7 - len(week)):
-                    week.append("")
+                    week.append({"number": ""})
                 month.append(week)
         
         year.append({"year_number": year_now, "month_number": tuki, "month":month})
@@ -122,7 +131,7 @@ def top(request):
 def tasks(request, year, month, day):
     tasks = task.objects.filter(year = year, month = month, day = day).order_by("time")
 
-    
+    print(tasks)
     result = {
         "tasks":tasks,
         "year": year,

@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 from socket import gethostname
 hostname = gethostname()
 
-if "COMPUTER-NAME" in hostname:
+"""if "COMPUTER-NAME" in hostname:
     # デバッグ環境
     # DEBUG = True 
     DATABASES = {
@@ -97,7 +97,14 @@ else:
     DATABASES = {
         'default': dj_database_url.config()
     }
-    ALLOWED_HOSTS = ['.herokuapp.com']
+    ALLOWED_HOSTS = ['.herokuapp.com']"""
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation

@@ -3,6 +3,7 @@
 <html>
     <head>
         <title>予定表</title>
+        <link rel="icon" type="image/png" href="https://lh3.google.com/u/1/d/1_EJgxbDdRrJZVUO0v2_RRtBzEFZagowp=w1685-h865-iv1">
         <link rel="stylesheet" href="{% static 'css/top.css' %}">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     </head>
@@ -21,7 +22,7 @@
                 {% for month in year %}
                 <div class="col-lg-4 col-12"> 
                     <h2>{{month.year_number}}年{{month.month_number}}月</h2>
-                    <table class = "table table-bordered">
+                    <table class = "table table-bordered shadow p-3 mb-5 bg-white rounded">
                         <tr>
                             <td>日</td>
                             <td>月</td>
@@ -35,7 +36,12 @@
                         {% for week in month.month %}
                             <tr>
                                 {% for day in week %}
-                                    <td><a href="/{{month.year_number}}/{{month.month_number}}/{{day}}" style="text-decoration: none;">{{day}}</a></td>
+                                    {% if day.bool %}
+                                        <td class="bg-danger"><a href="/{{month.year_number}}/{{month.month_number}}/{{day.number}}" style="text-decoration: none;">{{day.number}}</a></td>
+                                    
+                                    {% else %}
+                                        <td><a href="/{{month.year_number}}/{{month.month_number}}/{{day.number}}" style="text-decoration: none;">{{day.number}}</a></td>
+                                    {% endif %}
                                 {% endfor %}
                             </tr>
                         {% endfor %}
